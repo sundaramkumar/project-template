@@ -5,9 +5,9 @@
 
 One command sets up a new project with:
 1. a multi-agent AI dev team (tech-lead, developer, tester; the main Claude session is the Engineering Manager)
-2. the Symatis application template (Bun + Hono + Drizzle + PostgreSQL + React 19 + Tailwind), cloned from GitHub;
+2. the application template (Bun + Hono + Drizzle + PostgreSQL + React 19 + Tailwind), cloned from GitHub;
    `/kickoff` then installs the software it needs and sets up the database
-3. a knowledge wiki (Obsidian vault, maintained by Claude)
+3. a knowledge wiki, maintained by Claude, which renders to HTML at `wiki/index.html`
 plus a requirements intake: drop requirement documents in, Claude turns them into a tracked list and a task plan.
 
     You (boss) -> main Claude session (Engineering Manager, defined in CLAUDE.md)
@@ -18,7 +18,7 @@ plus a requirements intake: drop requirement documents in, Claude turns them int
     install.sh            installs /new-project and /team-access for the current user
     user-commands/        user-level slash commands: /new-project /team-access /update-kit
     new-project.sh        the kick-start script (called by /new-project)
-    app-template.conf     repo + branch to clone
+    app-template.conf     the template repos + branches to clone, and the wiki profile
     template/             copied into every project
       CLAUDE.md  TASKS.md  dot-gitignore
       docs/BRIEF.md             short project description
@@ -29,17 +29,34 @@ plus a requirements intake: drop requirement documents in, Claude turns them int
         skills/   add-feature, backend-hono, db-drizzle, frontend-react, testing, code-review
         commands/ /kickoff  /requirements  /app-setup  /add-task  /task
         settings.json
-    wiki/                 knowledge/ vault + /wiki-ingest /wiki-query /wiki-sync /wiki-lint (added by default)
-    _to_delete/           old Express-era skills, replaced. Delete this folder.
+      CLAUDE.wiki.md            wiki section appended to the project's CLAUDE.md
+
+The wiki itself is not kept in this kit: it is cloned per project from the wiki template
+named in app-template.conf, so wiki improvements reach new projects without touching the kit.
+
+## Project layout
+Every project gets the same shape, so a team member knows where things are without asking:
+
+    <project>/
+      frontend/            React SPA        (application template)
+      backend/             Hono API         (application template)
+      shared/              API contract     (application template)
+      wiki/                knowledge wiki - open wiki/index.html
+      docs/requirements/   INBOX: drop requirement documents here
+      docs/BRIEF.md        short project description
+      .claude/             agents, commands, skills
+      CLAUDE.md  TASKS.md
 
 ## One-time setup
-1. Move this folder somewhere permanent:   mv ~/projects/zamzam_am/ai-dev-team-template ~/ai-dev-team-template
-2. chmod +x ~/ai-dev-team-template/new-project.sh
-   echo "alias newproj='~/ai-dev-team-template/new-project.sh'" >> ~/.zshrc && source ~/.zshrc
-3. The application template repo is private. Check your machine can clone it:
-       git ls-remote https://github.com/Symatis-Solutions/application-template.git
-   If that asks for a password or fails, run `gh auth login` (or add an SSH key with access to the org).
-   Every team member needs read access to the repo and a working git login on their own machine.
+1. Clone the kit somewhere permanent:   git clone https://github.com/sundaramkumar/project-template.git ~/project-template
+   (kit owner moving an existing folder: mv <folder> ~/project-template)
+2. chmod +x ~/project-template/new-project.sh
+   echo "alias newproj='~/project-template/new-project.sh'" >> ~/.zshrc && source ~/.zshrc
+3. The template repos may be private. Check your machine can clone the ones in app-template.conf:
+       git ls-remote https://github.com/sundaramkumar/application-template.git
+       git ls-remote https://github.com/sundaramkumar/llm-wiki-template.git
+   If either asks for a password or fails, run `gh auth login` (or add an SSH key with access).
+   Every team member needs read access to both repos and a working git login on their own machine.
 4. Have Claude Code and git. Bun and PostgreSQL are checked and installed by /kickoff, with your OK.
 
 ## For every new project
@@ -55,11 +72,12 @@ plus a requirements intake: drop requirement documents in, Claude turns them int
 4. /kickoff
    - /app-setup: checks Bun, PostgreSQL, ports; shows ONE table; installs after your yes; creates a project-named database,
      .env (random JWT secret), migrates and seeds, starts the app and checks /api/health and login
-   - reads the requirements (wiki ingest + docs/REQUIREMENTS.md; unclear items become Open items, never guesses)
+   - reads the requirements (docs/requirements/ + docs/REQUIREMENTS.md; unclear items become Open items, never guesses)
    - updates TASKS.md: T-001..T-003 (template setup, test setup, cleanup) + 8-15 feature tasks citing REQ ids
 5. Open http://localhost:5175, log in as admin / admin123 (change it). Then /task T-002, /task T-003 ...
    and after each task: /clear. /add-task <text> adds a task.
-6. New client documents later: /requirements <file>, then /add-task for the new work. After a few tasks: /wiki-sync.
+6. New client documents later: /requirements <file>, then /add-task for the new work.
+   After a few tasks: /wiki-sync, then /wiki-build to refresh wiki/index.html.
    Blocked tasks need your decision: write it in Notes, set status todo.
 
 ## Known defects in the application template (found when building this kit)
@@ -81,7 +99,8 @@ They are tracked as T-002 and T-003 in every new project. Better: fix them once 
 ## Customising
 - Another stack: change the Stack lines in CLAUDE.md and the skills; point app-template.conf at another repo.
 - New skill: copy a skill folder, rewrite it, add its name to `skills:` in .claude/agents/developer.md.
-- Edit anything under template/ or wiki/ to change future projects (existing projects keep their copy).
+- Edit anything under template/ to change future projects (existing projects keep their copy).
+- Change the wiki itself in the wiki template repo; new projects pick it up on their next clone.
 
 ## Troubleshooting
 - "COULD NOT CLONE": your git login cannot read the repo. Fix the login or ask for access, then re-run newproj on the same folder.

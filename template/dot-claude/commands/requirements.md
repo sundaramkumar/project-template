@@ -8,7 +8,8 @@ Ingest requirements. Input: $ARGUMENTS
    - pasted text: save as docs/requirements/YYYY-MM-DD_pasted.md.
 2. Read each source fully. PDFs: use Read. docx/xlsx/html: convert to text first (pandoc, or python3 with
    python-docx/openpyxl); if a converter is missing, tell me what you need to install and wait.
-3. If knowledge/ exists: follow the Ingest operation in knowledge/CLAUDE.md for each source (wiki source page, affected pages, index, log).
+3. If wiki/ exists: add or update a source page for each source following the rules in wiki/CLAUDE.md (source page,
+   affected pages, index, log), then run /wiki-build.
 4. Update docs/REQUIREMENTS.md:
    - add the source under Sources;
    - add each requirement as one row: next free REQ-nnn, one testable sentence, module, priority (Must/Should/Could), status `new`, source file;
