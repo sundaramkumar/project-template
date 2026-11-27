@@ -2,7 +2,7 @@
 name: db-drizzle
 description: PostgreSQL + Drizzle conventions (schema, audit and soft-delete columns, uuid keys, migrations). Use when touching the database, schema or migrations.
 ---
-# Database (application/backend/src/db)
+# Database (backend/src/db)
 - Schema file per table in db/schema/<name>.ts, exported from schema/index.ts. snake_case columns, plural table names. Copy users.ts.
 - Primary key: uuidPk() (db/schema/_columns.ts). Foreign keys are uuid; index every FK and frequent filter column.
 - Every table: created_by, updated_by (uuid), created_at (defaultNow), updated_at (defaultNow + $onUpdate), deleted_at (nullable).

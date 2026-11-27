@@ -68,7 +68,8 @@ Every project gets the same shape, so a team member knows where things are witho
    c. A web link:    /requirements https://example.com/spec
    d. Paste text:    /requirements <paste emails, meeting notes, chat messages>
    e. Only a rough idea: a few bullets in docs/BRIEF.md
-3. cd ~/projects/my_app && claude        then /agents (expect tech-lead, developer, tester).
+3. cd ~/projects/my_app && claude        then `ls .claude/agents` (expect tech-lead.md, developer.md, tester.md).
+   The /agents command was removed from Claude Code; the agents are files and load with the session.
 4. /kickoff
    - /app-setup: checks Bun, PostgreSQL, ports; shows ONE table; installs after your yes; creates a project-named database,
      .env (random JWT secret), migrates and seeds, starts the app and checks /api/health and login

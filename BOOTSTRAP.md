@@ -61,10 +61,13 @@ When it finishes, the wiki is at `~/projects/my_app/wiki/index.html`.
 
 ## E. Build (every task)
 Open `~/projects/my_app` as the working folder in a NEW Claude Code session (desktop app: New session -> choose the folder).
-This loads the three agents. Then:
+This loads the three agents from `.claude/agents/`. Then:
 
-    /agents                  (check: tech-lead, developer, tester)
     /task T-002              (plan -> build -> test -> review; 5-line report)
+
+To confirm the agents are there, run `ls .claude/agents` (expect tech-lead.md, developer.md, tester.md).
+The `/agents` command no longer lists them: Claude Code removed that wizard. Nothing is wrong if it is missing -
+the agents are files, picked up when the session starts in the project folder, and /task delegates to them by name.
     /clear
     /add-task <what you want>      /requirements <new file or link or pasted text>      /wiki-sync      /wiki-build
 

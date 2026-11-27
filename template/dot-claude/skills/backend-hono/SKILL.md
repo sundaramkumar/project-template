@@ -1,8 +1,8 @@
 ---
 name: backend-hono
-description: Conventions for the Bun + Hono API in application/backend (layering, routes, validation, errors, responses, auth, audit). Use when creating or changing backend code.
+description: Conventions for the Bun + Hono API in backend (layering, routes, validation, errors, responses, auth, audit). Use when creating or changing backend code.
 ---
-# Backend (application/backend/src)
+# Backend (backend/src)
 - Per feature, features/<name>/: routes (URL + validation, no logic) -> controller (thin: read params/body, call ONE service fn,
   reply via lib/response) -> service (all Drizzle queries + business rules; throws AppError).
 - Routes: copy role.routes.ts: describeRoute({summary, tags}) + requirePermission('<module>', 'read|create|update|delete')

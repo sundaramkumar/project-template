@@ -220,8 +220,9 @@ cat <<MSG
 Done. Next:
   1. Put the requirements in $DEST/docs/requirements/ (any format) and/or fill docs/BRIEF.md
   2. cd "$DEST" && claude
-  3. Type /agents (expect tech-lead, developer, tester), then /kickoff
+  3. Run /kickoff
      (/kickoff installs the app template's software, reads the requirements, and builds TASKS.md)
+     The agents load from .claude/agents/ when the session starts. To list them: ls .claude/agents
 
   Wiki: $DEST/wiki/index.html
 MSG

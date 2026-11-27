@@ -3,11 +3,11 @@ Brief: docs/BRIEF.md. Requirements: docs/REQUIREMENTS.md (sources in docs/requir
 Cite REQ ids in task Notes; mark a requirement `done` in REQUIREMENTS.md when its tasks are done.
 Stack: Bun monorepo, TypeScript. Backend: Hono + Drizzle (PostgreSQL via Bun.sql), Zod 4, JWT httpOnly cookie, RBAC.
 Frontend: React 19 + Vite + TanStack Query + Zustand + Tailwind 3 + react-hook-form. API contract shared in `@shared`.
-Layout: application/backend (:3005)  application/frontend (:5175)  application/shared (@shared)
-Docs: ARCHITECTURE.md (conventions) and OVERVIEW.md are authoritative. IGNORE application/backend/README.md and
-application/frontend/README.md (stale CRM leftovers).
+Layout: backend (:3005)  frontend (:5175)  shared (@shared)
+Docs: ARCHITECTURE.md (conventions) and OVERVIEW.md are authoritative. IGNORE backend/README.md and
+frontend/README.md (stale CRM leftovers).
 Commands (repo root): bun run dev | typecheck | lint | build | db:generate (review SQL) -> db:migrate | seed
-Tests: cd application/backend && bun run test | cd application/frontend && bun run test
+Tests: cd backend && bun run test | cd frontend && bun run test
 Git hooks (lefthook): commit runs lint, push runs typecheck. Fix failures; never use --no-verify.
 (If the stack differs, edit these lines AND the skills in .claude/skills/.)
 

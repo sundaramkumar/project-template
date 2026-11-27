@@ -27,4 +27,5 @@ Bash call (this session was not started inside the new project).
 4. Finish with: the project path, the wiki path (~/projects/<name>/wiki/index.html), what is running (URLs),
    the task list (ID + title), open questions, and the ONE remaining step:
    open ~/projects/<name> as the working folder in a new Claude Code session (desktop app: New session -> choose that folder),
-   type /agents to check tech-lead, developer and tester are listed, then /task T-002.
+   then /task T-002. The three agents load from .claude/agents/ when that session starts; `ls .claude/agents`
+   lists them. Do not tell me to run /agents: Claude Code removed that command.
