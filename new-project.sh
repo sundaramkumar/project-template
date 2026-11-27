@@ -201,6 +201,20 @@ else echo "  skipped (--no-app-template)"; fi
 
 [ -d "$DEST/.git" ] || { git init -q "$DEST" && echo "git init done"; }
 
+# A project with no commits cannot be diffed, reverted or branched, and every file
+# shows as untracked - which reads as "the wiki is missing" when it is merely uncommitted.
+if ! git -C "$DEST" rev-parse HEAD >/dev/null 2>&1; then
+  if git -C "$DEST" add -A 2>/dev/null \
+     && git -C "$DEST" commit -q -m "Scaffold $NAME
+
+Created by new-project.sh. Templates recorded in docs/.app-template-source
+and docs/.wiki-template-source." 2>/dev/null; then
+    echo "git: baseline commit created ($(git -C "$DEST" rev-parse --short HEAD))"
+  else
+    echo "git: no baseline commit - set user.name and user.email, then: git add -A && git commit"
+  fi
+fi
+
 cat <<MSG
 
 Done. Next:

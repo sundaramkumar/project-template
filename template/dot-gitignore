@@ -6,5 +6,9 @@ build/
 *.log
 .DS_Store
 coverage/
-knowledge/.obsidian/workspace*.json
-knowledge/.obsidian/cache
+
+# Wiki: the generated HTML is rebuilt with /wiki-build, so it is not tracked.
+# The markdown pages in wiki/wiki/ ARE tracked - that is the wiki's source.
+wiki/site/
+wiki/.obsidian/workspace*.json
+wiki/.obsidian/cache
